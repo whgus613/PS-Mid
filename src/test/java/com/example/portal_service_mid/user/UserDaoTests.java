@@ -1,5 +1,6 @@
 package com.example.portal_service_mid.user;
 
+import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
@@ -47,6 +48,40 @@ public class UserDaoTests {
         assertThat(insertedUser.getId(), is(user.getId()));
         assertThat(insertedUser.getName(), is(name));
         assertThat(insertedUser.getPassword(), is(password));
+    }
+
+    @Test
+    public void update() throws SQLException, ClassNotFoundException{
+        String updateName = "현지";
+        String updatePassword = "1212";
+        User user = insertedUser();
+        user.setName(updateName);
+        user.setPassword(updatePassword);
+        userDao.update(user);
+
+        User updatedUser = userDao.findById(user.getId());
+        assertThat(updatedUser.getName(), is(updateName));
+        assertThat(updatedUser.getPassword(), is(updatePassword));
+    }
+
+    @Test
+    public void delete() throws SQLException, ClassNotFoundException{
+        User user = insertedUser();
+        userDao.delete(user.getId());
+
+        User deletedUser = userDao.findById(user.getId());
+        assertThat(deletedUser, IsNull.nullValue());
+    }
+
+    @Test
+    public User insertedUser() throws SQLException, ClassNotFoundException{
+        String name = "조현지";
+        String password = "1111";
+        User user = new User();
+        user.setName(name);
+        user.setPassword(password);
+        userDao.insert(user);
+        return user;
     }
 
 }
