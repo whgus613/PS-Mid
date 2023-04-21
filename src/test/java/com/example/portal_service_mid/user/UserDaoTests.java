@@ -15,7 +15,7 @@ public class UserDaoTests {
         Long id = 1l;
         String name = "hulk";
         String password = "1234";
-        UserDao userDao = new UserDao();
+        UserDao userDao = new JejuUserDao();
         User user = userDao.findById(id);
         assertThat(user.getId(), is(id));
         assertThat(user.getName(), is(name));
@@ -29,7 +29,7 @@ public class UserDaoTests {
         User user = new User();
         user.setName(name);
         user.setPassword(password);
-        UserDao userDao = new UserDao();
+        UserDao userDao = new JejuUserDao();
         userDao.insert(user);
         assertThat(user.getId(), greaterThan(1l));
 
