@@ -30,8 +30,8 @@ public class UserDaoTests {
         User user = new User();
         user.setName(name);
         user.setPassword(password);
-        ConnectionMaker connectionMaker = new JejuConnectionMaker();
-        UserDao userDao = new UserDao(connectionMaker);
+        DaoFactory daoFactory = new DaoFactory();
+        UserDao userDao = daoFactory.getUserDao();
         userDao.insert(user);
         assertThat(user.getId(), greaterThan(1l));
 
